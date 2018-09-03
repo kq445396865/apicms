@@ -238,4 +238,14 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+
+    //验证码配置
+    'captcha'    =>[
+        'imageW' => 130,
+        'imageH' => 46,
+        'length' => 4,
+        'fontSize' => 18,
+        'useCurve' => false,
+
+    ],
 ];

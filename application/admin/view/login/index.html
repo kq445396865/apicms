@@ -4,10 +4,9 @@
 <meta charset="UTF-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
 <meta name="viewport" content="width=device-width, initial-scale=1"> 
-<title>login</title>
+<title>后台登录</title>
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/admin/login/normalize.css" />
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/admin/login/demo.css" />
-<!--必要样式-->
 <link rel="stylesheet" type="text/css" href="__STATIC__/css/admin/login/component.css" />
 <!--[if IE]>
 <script src="js/html5.js"></script>
@@ -20,31 +19,39 @@
 					<canvas id="demo-canvas"></canvas>
 					<div class="logo_box">
 						<h3>QCMS欢迎你</h3>
-						<form action="#" name="f" method="post">
+						<form method="post">
 							<div class="input_outer">
 								<span class="u_user"></span>
-								<input name="username" class="text" style="color: #FFFFFF !important" type="text" placeholder="请输入账户">
+								<input name="username" class="text" style="color: #FFFFFF !important" type="text" placeholder="请输入账户" id="tips">
 							</div>
 							<div class="input_outer">
 								<span class="us_uer"></span>
 								<input name="password" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入密码">
 							</div>
 							<div class="input_outer">
-								<span class="us_uer"></span>
-								<input name="logpass" class="text" style="color: #FFFFFF !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入验证码">
+								<input name="code" class="text" style="color: #FFFFFF !important;  z-index:100;width: 130px;float: left;"value="" type="text" placeholder="请输入验证码">
+								<img src="/captcha" alt="点击更新验证码"  id="captcha" style="cursor:pointer" />
 							</div>
-							<div class="mb2"><a class="act-but submit" href="javascript:;" style="color: #FFFFFF">登录</a></div>
+							<div class="mb2"><a class="act-but submit" href="javascript:;" style="color: #FFFFFF" onclick="login.check()">登录</a>
+						</div>
 						</form>
 					</div>
 				</div>
 			</div>
-		</div><!-- /container -->
-		<script src="__STATIC__/js/admin/login/TweenLite.min.js"></script>
-		<script src="__STATIC__/js/admin/login/EasePack.min.js"></script>
-		<script src="__STATIC__/js/admin/login/rAF.js"></script>
-		<script src="__STATIC__/js/admin/login/demo-1.js"></script>
-		<div style="text-align:center;">
-
-</div>
-	</body>
+		</div>
+		<script type="text/javascript" src="__STATIC__/hadmin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script src="__STATIC__/hadmin/lib/layer/2.4/layer.js"></script>
+<script src="__STATIC__/js/dialog.js"></script>
+<script src="__STATIC__/js/admin/login/login.js"></script>
+<script src="__STATIC__/js/admin/login/TweenLite.min.js"></script>
+<script src="__STATIC__/js/admin/login/EasePack.min.js"></script>
+<script src="__STATIC__/js/admin/login/rAF.js"></script>
+<script src="__STATIC__/js/admin/login/demo-1.js"></script>
+<script>
+			//刷新验证码
+			$('#captcha').click(function(obj){
+        			this.src = '/captcha?'+Math.random();
+			});
+</script>
+</body>
 </html>

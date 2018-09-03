@@ -10,3 +10,12 @@
 // +----------------------------------------------------------------------
 
 // 应用公共文件
+
+  function msg($status,$message,$data = array()){
+       $result = array(
+          'status' => $status,
+          'message' => $message,
+          'data' => $data,
+       );
+     exit(json_encode($result)); 
+  }

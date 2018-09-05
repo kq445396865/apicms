@@ -6,6 +6,9 @@ use think\Model;
 
 
 class AdminUser extends Model{
+
+	protected $autoWriteTimestamp = true;
+
     //新增管理员入库
 	public function add($data=array()){
 

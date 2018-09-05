@@ -11,6 +11,13 @@ class Login extends Controller{
 
 		return $this->fetch();
 	}
+
+
+	public function check(){
+		if(){
+			
+		}
+	}
 }
 
  ?>

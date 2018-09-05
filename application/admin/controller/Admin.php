@@ -6,8 +6,11 @@ use think\Controller;
 
 class Admin extends Controller{
 
+	public function index(){
+		$this->fetch();
+	}
+
 	public function add(){
-		$jumpUrl = '111';
 		//判断是否POST提交
 		if(request()->isPost()){
             //打印数据
@@ -18,9 +21,38 @@ class Admin extends Controller{
                  return msg(0,$validate->getError());
             }
 
-            $data['password'] = md5($data['password'].'kq');
+            $res = model('AdminUser')->getAdminByName($data['username']);
+
+            if(!$res){
+
+ 				    //md5加密
+ 					$data['password'] = getMd5Password($data['password']);
+		            $data['status'] = 1;
+		 
+		            try {
+		            	$id = model('AdminUser')->add($data);
+		            	//print_r($id);exit;
+		            	if(!$id){
+		                    return msg(0,'error');
+		            	}else{
+		            		return msg(1,'id='.$id.'的用户新增成功');
+		            	}
+
+		            } catch (Exception $e) {
+
+		            	return msg(0,$e->getMessage());
+		            }
+
+            }else{
+
+					return msg(0,'用户已存在');
+
+            }
+
+            
 
 		}else{
+
 			return $this->fetch();
 		}
 		

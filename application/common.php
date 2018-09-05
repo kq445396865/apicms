@@ -19,3 +19,9 @@
        );
      exit(json_encode($result)); 
   }
+
+
+
+  function getMd5Password($password){
+  	return md5($password.'kq');
+  }

@@ -32,7 +32,9 @@
 								<input name="code" class="text" style="color: #FFFFFF !important;  z-index:100;width: 130px;float: left;"value="" type="text" placeholder="请输入验证码">
 								<img src="/captcha" alt="点击更新验证码"  id="captcha" style="cursor:pointer" />
 							</div>
-							<div class="mb2"><a class="act-but submit" href="javascript:;" style="color: #FFFFFF" onclick="login.check()">登录</a>
+							<div class="mb2">
+
+								<input type="button" style="width: 330px;color: #fff;border: 0;" value="登录" class="act-but submit" onclick="login.check()" />
 						</div>
 						</form>
 					</div>
@@ -52,6 +54,17 @@
 			$('#captcha').click(function(obj){
         			this.src = '/captcha?'+Math.random();
 			});
+
+
+			var refresh_captcha = function(){
+				$('#captcha').attr('src','/captcha?'+Math.random());
+			}
+</script>
+<script>
+	 var SCOPE = {
+	 	'save_url' : "{:url('login/check')}",
+	 	'jump_url' : "{:url('index/index')}",
+	 }
 </script>
 </body>
 </html>

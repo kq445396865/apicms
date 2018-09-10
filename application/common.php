@@ -22,6 +22,3 @@
 
 
 
-  function getMd5Password($password){
-  	return md5($password.'kq');
-  }

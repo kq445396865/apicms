@@ -3,10 +3,13 @@ namespace app\admin\controller;
 
 use think\Controller;
 
+use app\common\lib\IAuth;
 
-class Admin extends Controller{
+
+class Admin extends Base{
 
 	public function index(){
+		
 		$this->fetch();
 	}
 
@@ -26,7 +29,7 @@ class Admin extends Controller{
             if(!$res){
 
  				    //md5加密
- 					$data['password'] = getMd5Password($data['password']);
+ 					$data['password'] = IAuth::getMd5Password($data['password']);
 		            $data['status'] = 1;
 		 
 		            try {
@@ -48,9 +51,7 @@ class Admin extends Controller{
 					return msg(0,'用户已存在');
 
             }
-
             
-
 		}else{
 
 			return $this->fetch();

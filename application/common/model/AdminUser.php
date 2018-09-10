@@ -6,7 +6,7 @@ use think\Model;
 
 
 class AdminUser extends Model{
-
+	//入库时间
 	protected $autoWriteTimestamp = true;
 
     //新增管理员入库

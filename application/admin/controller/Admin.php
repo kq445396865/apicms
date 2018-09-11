@@ -23,8 +23,15 @@ class Admin extends Base{
             if(!$validate->check($data)){
                  return msg(0,$validate->getError());
             }
+            try {
 
-            $res = model('AdminUser')->getAdminByName($data['username']);
+            $res = model('AdminUser')->get(['username' => $data['username']]);
+
+            } catch (\Exception $e) {
+            	
+            	return msg(0,$e->getMessage());
+            }
+            
 
             if(!$res){
 
@@ -33,11 +40,15 @@ class Admin extends Base{
 		            $data['status'] = 1;
 		 
 		            try {
+		            	
 		            	$id = model('AdminUser')->add($data);
 		            	//print_r($id);exit;
 		            	if(!$id){
+
 		                    return msg(0,'error');
+
 		            	}else{
+
 		            		return msg(1,'id='.$id.'的用户新增成功');
 		            	}
 

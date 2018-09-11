@@ -5,7 +5,6 @@ namespace app\common\validate;
 use think\Validate;
 
 
-
 class AdminUser extends Validate{
 
 	protected $rule = [

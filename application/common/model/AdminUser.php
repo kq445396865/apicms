@@ -21,19 +21,6 @@ class AdminUser extends Model{
 	}
 
 
-	//查询管理员是否存在
-	public function getAdminByName($username=[]){
-		 $data = [
-		 	'username' => $username,
-		 	'status' => 1,
-		 ];
-         
-         return $this->where($data)->find();
-
-         
-
-
-	}
 }
 
 

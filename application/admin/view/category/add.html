@@ -17,7 +17,7 @@
 						<select class="select" id="sel_Sub" name="parentid" onchange="SetSubID(this);">
 							<option value="0">顶级分类</option>
 							{volist name="cateres" id="cate"}
-							<option value="{$cate.cat_id}">{$cate.cat_name}</option>
+							<option value="{$cate.cat_id}"><?php echo str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;',$cate['level']*2); $a = empty($cate['level']) ? '' : '├';echo $a;?>{$cate.cat_name}</option>
 							{/volist}
 						</select>
 						</span>
@@ -36,7 +36,7 @@
 					</div>
 				</div>
 				<div class="row cl">
-					<label class="form-label col-xs-4 col-sm-3">内容类型：</label>
+					<label class="form-label col-xs-4 col-sm-3">栏目类型：</label>
 					<div class="formControls col-xs-8 col-sm-9">
 						<span class="select-box">
 						<select name="type" class="select">

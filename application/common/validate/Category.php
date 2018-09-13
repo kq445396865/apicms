@@ -12,6 +12,11 @@ class Category extends Validate {
 		'type' => 'require',
 
 	];
+	protected $field = [
+		'cat_name' => '栏目名称',
+		'type' => '栏目类型',
+
+	];
 }
 
 

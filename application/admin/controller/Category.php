@@ -14,7 +14,7 @@ class Category extends Base {
 
 	public function index(){
 		
-		$cateres = model('Category')->select();
+		$cateres = model('Category')->catetree();
 		$this->assign('cateres',$cateres);
 		return $this->fetch();
 	}
@@ -64,7 +64,7 @@ class Category extends Base {
 
 		}
 
-		$cateres = model('Category')->select();
+		$cateres = model('Category')->catetree();
 		$this->assign('cateres',$cateres);
 
 			return $this->fetch();

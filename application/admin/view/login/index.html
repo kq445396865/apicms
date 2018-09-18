@@ -55,7 +55,7 @@
         			this.src = '/captcha?'+Math.random();
 			});
 
-
+			//自动刷新验证码
 			var refresh_captcha = function(){
 				$('#captcha').attr('src','/captcha?'+Math.random());
 			}

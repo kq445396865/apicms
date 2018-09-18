@@ -11,7 +11,6 @@ use think\Controller;
 
 class Category extends Base {
 
-
 	public function index(){
 		
 		$cateres = model('Category')->catetree();

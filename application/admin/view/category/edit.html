@@ -1,4 +1,5 @@
 {include file="public/_meta"}
+
 <div class="page-container">
 	<form class="form form-horizontal" id="form-add">
 		<div id="tab-category" class="HuiTab">
@@ -8,17 +9,19 @@
 <span>SEO</span> -->
 			</div>
 			<div class="tabCon">
+				<input type="hidden" name="cat_id" value="{$cates.cat_id}">
 				<div class="row cl">
 					<label class="form-label col-xs-4 col-sm-3">
 						<span class="c-red">*</span>
 						上级栏目：</label>
 					<div class="formControls col-xs-8 col-sm-9">
 						<span class="select-box">
-						<select class="select" id="sel_Sub" name="parentid">
+						<select class="select" id="sel_Sub" name="parentid" onchange="SetSubID(this);">
 							<option value="0">顶级分类</option>
 							{volist name="cateres" id="cate"}
-							<option value="{$cate.cat_id}"><?php echo str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;',$cate['level']*2); $a = empty($cate['level']) ? '' : '├';echo $a;?>{$cate.cat_name}</option>
+							<option {if condition="$cates['parentid'] eq $cate['cat_id']"}selected="selected"{/if} value="{$cate.cat_id}"><?php echo str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;',$cate['level']*2); $a = empty($cate['level']) ? '' : '├';echo $a;?>{$cate.cat_name}</option>
 							{/volist}
+						
 						</select>
 						</span>
 					</div>
@@ -30,7 +33,7 @@
 						<span class="c-red">*</span>
 						栏目名称：</label>
 					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" class="input-text" value="" placeholder="" id="" name="cat_name">
+						<input type="text" class="input-text" value="{$cates.cat_name}" placeholder="" id="" name="cat_name">
 					</div>
 					<div class="col-3">
 					</div>
@@ -41,8 +44,8 @@
 						<span class="select-box">
 						<select name="type" class="select">
 							<option value="">请选择</option>
-							<option value="0">列表</option>
-							<option value="1">单页</option>
+							<option  {if condition="$cates['type'] eq 0"}selected="selected"{/if} value="0">列表</option>
+							<option {if condition="$cates['type'] eq 1"}selected="selected"{/if} value="1">单页</option>
 						</select>
 						</span>
 					</div>
@@ -160,7 +163,7 @@ $(function(){
 });
 
 var SCOPE = {
-	'save_url' : "{:url('category/add')}",
+	'save_url' : "{:url('category/edit')}",
 	//'jump_url' : "{:url('category/add')}",
 
 }

@@ -25,6 +25,26 @@ class Category extends Model{
 		return $arr;
 
 	}
+
+	public function getchilrenid($cateid){
+		$catres = $this->select();
+		return $this->_getchilrenid($catres,$cateid);
+	}
+
+
+	public function _getchilrenid($catres,$cateid){
+		static $arr = array();
+
+		foreach ($catres as $k => $v) {
+			if($v['pid'] == $cateid){
+				$arr[] = $v['id'];
+				$this->_getchilrenid($catres,$v['id']);
+			}
+		}
+
+		return $arr;
+
+	}
 	
 }
 

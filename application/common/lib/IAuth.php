@@ -3,6 +3,10 @@ namespace app\common\lib;
 
 
 class IAuth {
+	/**
+	 *
+	 * 设置密码
+	 */
 
 	public static function getMd5Password($data){
 

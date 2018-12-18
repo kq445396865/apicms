@@ -5,7 +5,7 @@ use think\Controller;
 
 
 /**
- * 商品栏目列表类
+ * 文章栏目列表类
  */
 
 
@@ -35,7 +35,7 @@ class Category extends Base {
 	 */
 	
 	public function add(){
-
+		//是否post提交
 		if(request()->isPost()){
 			
 			$data = input('post.');
@@ -58,7 +58,16 @@ class Category extends Base {
 			//判断栏目是否存在
 			if(!$res){
 
-				$id = model('Category')->save($data);
+				try {
+
+					$id = model('Category')->save($data);
+
+				} catch (\Exception $e) {
+					
+					return msg(0,$e->getMessage());
+				}
+
+				
 
 				if(!$id){
 
@@ -130,12 +139,32 @@ class Category extends Base {
 	public function del(){
 
 		$cateid = input('id');
-
-		echo $cateid;die;
+		//var_dump($cateid);exit;
+		try {
 
 		$sonid = model('Category')->getchilrenid($cateid);
 
-		if($sonid !== false){
+		//var_dump($sonid);exit;
+
+		} catch (\Exception $e) {
+
+			return msg(0,$e->getMessage());
+		}
+
+		
+
+		if(empty($sonid)){
+
+			$del = model('Category')->where('cat_id',$cateid)->delete();
+
+			if($del){
+
+				return msg(1,'栏目删除成功');
+
+			}else{
+
+				return msg(0,'栏目删除失败');
+			}
 
 		}else{
 

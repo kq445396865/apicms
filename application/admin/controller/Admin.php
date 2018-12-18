@@ -52,7 +52,7 @@ class Admin extends Base{
 		            		return msg(1,'id='.$id.'的用户新增成功');
 		            	}
 
-		            } catch (Exception $e) {
+		            } catch (\Exception $e) {
 
 		            	return msg(0,$e->getMessage());
 		            }
@@ -65,6 +65,11 @@ class Admin extends Base{
             
 		}else{
 
+			/*$admin = model('AdminUser')->find(['id' => 1]);
+			echo '<pre>';
+			var_dump($admin);
+			echo '</pre>';
+			exit;*/
 			return $this->fetch();
 		}
 		

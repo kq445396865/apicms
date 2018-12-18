@@ -64,11 +64,16 @@ function system_category_del(obj,id){
 			url: url,
 			dataType: 'json',
 			success: function(data){
-				$(obj).parents("tr").remove();
-				layer.msg('已删除!',{icon:1,time:1000});
+				if(data.status == 1){
+					$(obj).parents("tr").remove();
+					layer.msg(data.message,{icon:1,time:1000});
+				}else if(data.status == 0){
+					layer.msg(data.message, {icon:2, time:2000});
+				}
+				
 			},
 			error:function(data) {
-				console.log(data.msg);
+				console.log(data.message);
 			},
 		});
 	});

@@ -4,8 +4,10 @@ namespace app\common\model;
 use think\Model;
 
 
-class Category extends Model{
+class Category extends Base{
 
+
+	protected $autoWriteTimestamp = false;
 
 	public function catetree(){
 
@@ -27,18 +29,19 @@ class Category extends Model{
 	}
 
 	public function getchilrenid($cateid){
-		$catres = $this->select();
-		return $this->_getchilrenid($catres,$cateid);
+		
+		$cateres = $this->select();
+		return $this->_getchilrenid($cateres,$cateid);
 	}
 
 
-	public function _getchilrenid($catres,$cateid){
+	public function _getchilrenid($cateres,$cateid){
 		static $arr = array();
 
-		foreach ($catres as $k => $v) {
-			if($v['pid'] == $cateid){
-				$arr[] = $v['id'];
-				$this->_getchilrenid($catres,$v['id']);
+		foreach ($cateres as $k => $v) {
+			if($v['parentid'] == $cateid){
+				$arr[] = $v['cat_id'];
+				$this->_getchilrenid($cateres,$v['cat_id']);
 			}
 		}
 

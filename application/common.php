@@ -22,3 +22,49 @@
 
 
 
+  function pagination($obj){
+  		if(!$obj){
+        
+  			return '';
+  		}
+  		$params = request()->param();
+
+  		return $obj->appends($params)->render();
+  }
+
+
+  function getCatName($cats,$id){
+  	foreach ($cats as $cat) {
+  		$catlist[$cat['cat_id']] = $cat['cat_name'];
+  	}
+  	return isset($catlist[$id]) ? $catlist[$id] : '';
+  }
+
+  function isYesNo($str){
+  		return $str ? '是' : '否';
+  }
+  function isredg($str){
+  	return $str ? 'success' : 'error';
+  }
+
+
+  /**
+   * 通用化api接口数据输出
+   * int $status 业务状态码
+   * srting $message 信息提示
+   * [] data 数据
+   * int $httpCode http状态码 
+   * @return [type] [description]
+   */
+  function show($status,$message,$data,$httpCode){
+
+      $data = [
+        'status' => $status,
+        'message' => $message,
+        'data' => $data,
+      ];
+
+      return json($data,$httpCode);
+  }
+
+

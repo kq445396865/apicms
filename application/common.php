@@ -34,9 +34,12 @@
 
 
   function getCatName($cats,$id){
+
   	foreach ($cats as $cat) {
+
   		$catlist[$cat['cat_id']] = $cat['cat_name'];
   	}
+
   	return isset($catlist[$id]) ? $catlist[$id] : '';
   }
 
@@ -45,6 +48,16 @@
   }
   function isredg($str){
   	return $str ? 'success' : 'error';
+  }
+
+
+  function getCatByNewsCount($id){
+        
+
+        $total = model('News')->getCatByNews($id);
+        //echo $id;exit;
+
+      return isset($total) ? $total : '0';
   }
 
 
@@ -66,5 +79,10 @@
 
       return json($data,$httpCode);
   }
+
+
+
+
+
 
 

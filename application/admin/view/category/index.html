@@ -12,7 +12,6 @@
 		<a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a>
 		<a class="btn btn-primary radius" onclick="category_add('添加栏目','add.html')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加栏目</a>
 		</span>
-		<span class="r">共有数据：<strong>54</strong> 条</span>
 	</div>
 	<div class="mt-20">
 		<table class="table table-border table-bordered table-hover table-bg table-sort">
@@ -21,6 +20,7 @@
 					<th width="25"><input type="checkbox" name="" value=""></th>
 
 					<th>栏目名称</th>
+					<th>文章数量</th>
 					<th width="100">操作</th>
 				</tr>
 			</thead>
@@ -29,6 +29,7 @@
 				<tr class="text-c">
 					<td><input type="checkbox" name="" value=""></td>
 					<td class="text-l"><?php echo str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;',$cate['level']*2);$a= empty($cate['level'])? '' : '├─';echo $a; ?>{$cate.cat_name}</td>
+					<td>{$cate.cat_id|getCatByNewsCount}</td>
 					<td class="f-14"><a title="编辑" href="javascript:;" 
 						onclick="category_edit('栏目编辑','{:url('edit',array('id'=>$cate.cat_id))}','{$cate.cat_id}','700','480')" style="text-decoration:none"><i class="Hui-iconfont">&#xe6df;</i></a>
 						<a title="删除" href="javascript:;" del_url="{:url('del',['id' => $cate.cat_id])}" onclick="system_category_del(this,'$cate.cat_id')" class="ml-5" style="text-decoration:none"><i class="Hui-iconfont">&#xe6e2;</i></a></td>

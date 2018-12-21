@@ -1,24 +1,30 @@
 {include file="public/_meta"}
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 资讯管理 <span class="c-gray en">&gt;</span> 资讯列表 <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
+
 <div class="page-container">
 	<div class="text-c">
+	 <form action="{:url('news/index')}" method="get">
 		<button onclick="removeIframe()" class="btn btn-primary radius">关闭选项卡</button>
 	 <span class="select-box inline">
-		<select name="" class="select">
-							<option value="">全部栏目</option>
-							{volist name="cateres" id="cate"}
-							<option value="{$cate.cat_id}"><?php echo str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;',$cate['level']*2); $a = empty($cate['level']) ? '' : '├';echo $a;?>{$cate.cat_name}</option>
-							{/volist}
+		<select name="cat_id" class="select">
+				<option value="">全部栏目</option>
+				{volist name="cateres" id="cate"}
+				<option {if condition="$cat_id eq $cate.cat_id"}selected="selected"{/if} value="{$cate.cat_id}"><?php echo str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;',$cate['level']*2); $a = empty($cate['level']) ? '' : '├';echo $a;?>{$cate.cat_name}</option>
+				{/volist}
 		</select>
 		</span>
+		日期范围：
+      <input type="text" name="start_time" class="input-text" id="countTimestart" onfocus="selecttime(1)" value="{$start_time}" style="width:120px;" >
+      -
+      <input type="text" name="end_time" class="input-text" id="countTimestart" onfocus="selecttime(1)" value="{$end_time}"  style="width:120px;">
 
-
-		<input type="text" name="" id="" placeholder=" 资讯名称" style="width:250px" class="input-text">
+		<input type="text" name="title" id="" value="{$title}" placeholder=" 资讯名称" style="width:250px" class="input-text">
 		<button name="" id="" class="btn btn-success" type="submit"><i class="Hui-iconfont">&#xe665;</i> 搜资讯</button>
+	</form>
 	</div>
 	<div class="cl pd-5 bg-1 bk-gray mt-20"> <span class="l"><a href="javascript:;" onclick="datadel()" class="btn btn-danger radius"><i class="Hui-iconfont">&#xe6e2;</i> 批量删除</a> 
 		<a class="btn btn-primary radius" data-title="添加资讯" data-href="add.html" onclick="news_add('添加文章','add.html')" href="javascript:;"><i class="Hui-iconfont">&#xe600;</i> 添加资讯</a>
-	</span> <span class="r">共有数据：<strong>54</strong> 条</span> </div>
+	</span></div>
 	<div class="mt-20">
 		<table class="table table-border table-bordered table-bg table-hover table-sort table-responsive">
 			<thead>
@@ -27,7 +33,6 @@
 					<th width="80">ID</th>
 					<th>标题</th>
 					<th width="80">所属栏目</th>
-					
 					<th width="120">更新时间</th>
 					<th width="75">浏览次数</th>
 					<th width="60">是否推荐</th>
@@ -37,8 +42,7 @@
 			
 			<tbody>
 				{volist name="news" id="vo"}
-				<tr class="text-c">
-					
+				<tr class="text-c">	
 					<td><input type="checkbox" value="" name=""></td>
 					<td>{$vo.news_id}</td>
 					<td class="text-l"><u style="cursor:pointer" class="text-primary" onClick="article_edit('查看','article-zhang.html','10001')" title="查看">{$vo.title}</u></td>
@@ -48,27 +52,40 @@
 					<td>21212</td>
 					<td class="td-status"><span class="label label-{$vo.is_position|isredg} radius">{$vo.is_position|isYesNo}</span></td>
 					<td class="f-14 td-manage">
-						<a style="text-decoration:none" onClick="article_stop(this,'10001')" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>
 
 						<a style="text-decoration:none" class="ml-5" onClick="news_edit('文章编辑','{:url('edit',array('id'=>$vo.news_id))}','{$vo.news_id}')" href="javascript:;" title="编辑"><i class="Hui-iconfont">&#xe6df;</i></a>
 
-						<a style="text-decoration:none" class="ml-5" onClick="article_del(this,'10001')" href="javascript:;" title="删除"><i class="Hui-iconfont">&#xe6e2;</i></a>
+						<a style="text-decoration:none" class="ml-5" onClick="news_del(this,'{$vo.news_id}')" href="javascript:;" title="删除" del_url="{:url('del',array('id' => $vo.news_id))}"><i class="Hui-iconfont">&#xe6e2;</i></a>
+
 					</td>
-					
 				</tr>
 				{/volist}
 			</tbody>
 		</table>
-		{:pagination($news)}
+		<div id="laypage" style="margin-top: 20px;"></div>
 	</div>
 </div>
 <!--_footer 作为公共模版分离出去-->
 {include file="public/_footer"} <!--/_footer 作为公共模版分离出去-->
 
 <!--请在下方写此页面业务相关的脚本-->
-
-<script type="text/javascript" src="lib/datatables/1.10.0/jquery.dataTables.min.js"></script> 
-<script type="text/javascript" src="lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript" src="__STATIC__/hadmin/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="__STATIC__/hadmin/lib/laypage/1.2/laypage.js"></script>
+<script type="text/javascript">
+	var url = '{:url("news/index")}'+'?{$query}';
+	laypage({
+    cont: 'laypage',
+    pages: '{$pageTotal}',    //总页数
+    curr: '{$curr}',
+    //skin: '#5fb878',
+    theme: '#5fb878',
+    jump: function(obj, first){
+      if(!first){
+        location.href = url+'&page='+obj.curr;
+      }
+    }
+  });
+</script>
 <script type="text/javascript">
 
 
@@ -91,15 +108,20 @@ function news_edit(title,url,id,w,h){
 	layer.full(index);
 }
 /*资讯-删除*/
-function article_del(obj,id){
+function news_del(obj,id){
+	var url = $(obj).attr('del_url');
 	layer.confirm('确认要删除吗？',function(index){
 		$.ajax({
 			type: 'POST',
-			url: '',
+			url: url,
 			dataType: 'json',
 			success: function(data){
-				$(obj).parents("tr").remove();
-				layer.msg('已删除!',{icon:1,time:1000});
+				if(data.code == 1){
+					$(obj).parents("tr").remove();
+					layer.msg('已删除!',{icon:1,time:1000});
+				}else if(data.code == 0){
+					return  dialog.msg(data.msg,{icon:2});
+				}
 			},
 			error:function(data) {
 				console.log(data.msg);
@@ -108,51 +130,11 @@ function article_del(obj,id){
 	});
 }
 
-/*资讯-审核*/
-function article_shenhe(obj,id){
-	layer.confirm('审核文章？', {
-		btn: ['通过','不通过','取消'], 
-		shade: false,
-		closeBtn: 0
-	},
-	function(){
-		$(obj).parents("tr").find(".td-manage").prepend('<a class="c-primary" onClick="article_start(this,id)" href="javascript:;" title="申请上线">申请上线</a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');
-		$(obj).remove();
-		layer.msg('已发布', {icon:6,time:1000});
-	},
-	function(){
-		$(obj).parents("tr").find(".td-manage").prepend('<a class="c-primary" onClick="article_shenqing(this,id)" href="javascript:;" title="申请上线">申请上线</a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-danger radius">未通过</span>');
-		$(obj).remove();
-    	layer.msg('未通过', {icon:5,time:1000});
-	});	
-}
-/*资讯-下架*/
-function article_stop(obj,id){
-	layer.confirm('确认要下架吗？',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="article_start(this,id)" href="javascript:;" title="发布"><i class="Hui-iconfont">&#xe603;</i></a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-defaunt radius">已下架</span>');
-		$(obj).remove();
-		layer.msg('已下架!',{icon: 5,time:1000});
-	});
-}
 
-/*资讯-发布*/
-function article_start(obj,id){
-	layer.confirm('确认要发布吗？',function(index){
-		$(obj).parents("tr").find(".td-manage").prepend('<a style="text-decoration:none" onClick="article_stop(this,id)" href="javascript:;" title="下架"><i class="Hui-iconfont">&#xe6de;</i></a>');
-		$(obj).parents("tr").find(".td-status").html('<span class="label label-success radius">已发布</span>');
-		$(obj).remove();
-		layer.msg('已发布!',{icon: 6,time:1000});
-	});
-}
-/*资讯-申请上线*/
-function article_shenqing(obj,id){
-	$(obj).parents("tr").find(".td-status").html('<span class="label label-default radius">待审核</span>');
-	$(obj).parents("tr").find(".td-manage").html("");
-	layer.msg('已提交申请，耐心等待审核!', {icon: 1,time:2000});
-}
+
+
+
+
 
 </script> 
 </body>

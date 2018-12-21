@@ -24,6 +24,9 @@ class Category extends Base {
 		
 		$cateres = model('Category')->catetree();
 
+		//var_dump($cateres);exit;
+		//$newsCount = model('News')->getNewsByCount()
+
 		$this->assign('cateres',$cateres);
 		
 		return $this->fetch();
@@ -140,6 +143,7 @@ class Category extends Base {
 
 		$cateid = input('id');
 		//var_dump($cateid);exit;
+		$whereData = [];
 		try {
 
 		$sonid = model('Category')->getchilrenid($cateid);
@@ -151,9 +155,22 @@ class Category extends Base {
 			return msg(0,$e->getMessage());
 		}
 
+
+		try {
+
+			$whereData['cat_id'] = input('id');
+
+			$total = model('News')->getNewsByCount($whereData);
+
+			} catch (\Exception $e) {
+				
+				return msg(0,$e->getMessage());
+		}
+
 		
 
-		if(empty($sonid)){
+		if(empty($sonid) && empty($total)){
+
 
 			$del = model('Category')->where('cat_id',$cateid)->delete();
 

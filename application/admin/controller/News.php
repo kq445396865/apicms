@@ -16,13 +16,59 @@ class News extends Base{
 
 	public function index(){
 
-		$news = model('News')->getNews();
+		$data = input('param.');
+		//将获取的内容转化成url的格式
+		$query = http_build_query($data);
+
+		//halt($data);
+		//条件转换
+		$whereData = [];
+		if(!empty($data['start_time']) && !empty($data['end_time']) && $data['end_time'] > $data['start_time']){
+
+			$whereData['create_time'] =[
+				['gt',strtotime($data['start_time'])],
+				['lt',strtotime($data['end_time'])]
+			];
+		}
+		if(!empty($data['cat_id'])){
+
+			$whereData['cat_id'] = intval($data['cat_id']);
+		}
+		if(!empty($data['title'])){
+
+			$whereData['title'] = ['like','%'.$data['title'].'%'];
+		}
+		//var_dump($data);exit;
+		//模式一
+		//$news = model('News')->getNews();
+		
+		//模式二
+		//page  size from  limit(from,size)
+		
+		//当前页
+		$this->getPageAndSize($data);
+
+		//获取数据
+		$news = model('News')->getNewsByList($whereData,$this->from,$this->size);
+		//获取列表总数
+		$total = model('News')->getNewsByCount($whereData);
+		//根据总数和每页的数据数算出有多少页   总页数
+		$pageTotal = ceil($total/$this->size); //ceil(1.1) => 2 
+
 
 		$cateres = model('Category')->catetree();
 
 		return $this->fetch('',[
 			'news' => $news,
 			'cateres' => $cateres,
+			'pageTotal' => $pageTotal,
+			'curr' => $this->page,
+			'start_time' => empty($data['start_time']) ? '' : $data['start_time'],
+			'end_time' => empty($data['end_time']) ? '' : $data['end_time'],
+			'cat_id' => empty($data['cat_id']) ? '' : $data['cat_id'],
+			'title' => empty($data['title']) ? '' : $data['title'],
+			'query' => $query,
+
 		]);
 	}
 
@@ -38,6 +84,7 @@ class News extends Base{
 			if(!$validate->check($data)){
 
 				return $this->result('',0,$validate->getError());
+
 			}
 
 			try {
@@ -143,6 +190,22 @@ class News extends Base{
 			'cateres' => $cateres,
 			
 		]);
+	}
+
+
+
+	public function del(){
+
+		$newsId = input('id');
+
+		$del = model('News')->where('news_id',$newsId)->delete();
+
+		if($del){
+
+			return $this->result('',1,'删除成功');
+		}
+
+			return $this->result('',0,'删除失败');
 	}
 }
 

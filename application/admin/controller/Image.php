@@ -19,15 +19,15 @@ class Image extends Base {
 	 * 图片上传
 	 * @return [type] [description]
 	 */
-	public function upload0(){
+	public function upload(){
 
 		$file =  Request::instance()->file('file');
 		//上传图片到指定文件夹中
 		$info = $file->move('upload');
 
 		if($info && $info->getPathname()){
-			$data = [
 
+			$data = [
 				'status' => 1,
 				'message' => 'OK',
 				'data' => '/'.$info->getPathname(),
@@ -41,7 +41,7 @@ class Image extends Base {
 	}
 
 
-	public function upload(){
+	public function upload0(){
 		try {
 			$image = Upload::image();
 		} catch (\Exception $e) {

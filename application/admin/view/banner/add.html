@@ -1,0 +1,147 @@
+{include file="public/_meta"}
+
+<article class="page-container">
+	<form class="form form-horizontal" id="form-add" url="{:url('banner/add')}">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>banner标题：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="title" name="title">
+			</div>
+		</div>
+		<!-- <div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">简略标题：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="articletitle2" name="articletitle2">
+			</div>
+		</div> -->
+
+		<!-- <div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"><span class="c-red">*</span>文章类型：</label>
+			<div class="formControls col-xs-8 col-sm-9"> <span class="select-box">
+				<select name="articletype" class="select">
+					<option value="0">全部类型</option>
+					<option value="1">帮助说明</option>
+					<option value="2">新闻资讯</option>
+				</select>
+				</span> </div>
+		</div> -->
+		<!-- <div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">排序值：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="0" placeholder="" id="articlesort" name="articlesort">
+			</div>
+		</div> -->
+		 <div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">链接：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="" placeholder="" id="url" name="url">
+			</div>
+		</div> 
+
+		<!-- <div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">文章作者：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="0" placeholder="" id="author" name="author">
+			</div>
+		</div>
+		<div class="row cl">	
+			<label class="form-label col-xs-4 col-sm-2">文章来源：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" class="input-text" value="0" placeholder="" id="sources" name="sources">
+			</div>
+		</div> -->
+		<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-3">banner类型：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<span class="select-box">
+						<select name="type" class="select">
+							<option value="">请选择</option>
+							<option value="0">大图</option>
+							<option value="1">小程序</option>
+						</select>
+						</span>
+					</div>
+					<div class="col-3">
+					</div>
+				</div>
+		<!-- <div class="row cl">
+			<label class="form-label col-xs-4 col-sm-x2">使用独立模版：</label>
+			<div class="formControls col-xs-8 col-sm-9 skin-minimal">
+				<div class="check-box">
+					<input type="checkbox" id="checkbox-moban">
+					<label for="checkbox-moban">&nbsp;</label>
+				</div>
+				<button onClick="mobanxuanze()" class="btn btn-default radius ml-10">选择模版</button>
+			</div>
+		</div> -->
+		<div class="row cl">
+	      <label class="form-label col-xs-4 col-sm-2">缩略图：</label>
+	      <div class="formControls col-xs-8 col-sm-9">
+	        <input id="file_upload"  type="file" multiple="true" >
+	        <img style="display: none" id="upload_org_code_img" src="" width="150" height="150">
+	        <input id="file_upload_image" name="thumb" type="hidden" multiple="true" value="">
+	      </div>
+	    </div>
+		<div class="row cl">
+			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
+				<button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i>保存</button>
+				
+				<button onClick="removeIframe();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+			</div>
+		</div>
+	</form>
+</article>
+
+<!--_footer 作为公共模版分离出去-->
+{include file="public/_footer"} <!--/_footer /作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__STATIC__/hadmin/lib/jquery.validation/1.14.0/jquery.validate.js"></script> 
+<script type="text/javascript" src="__STATIC__/hadmin/lib/jquery.validation/1.14.0/validate-methods.js"></script>
+<script type="text/javascript" src="__STATIC__/hadmin/lib/jquery.validation/1.14.0/messages_zh.js"></script>
+
+{load href="__STATIC__/js/admin/uploadify/jquery.uploadify.min.js" /}
+{load href="__STATIC__/js/admin/images.js" /}
+<script type="text/javascript">
+$(function(){
+	$('.skin-minimal input').iCheck({
+		checkboxClass: 'icheckbox-blue',
+		radioClass: 'iradio-blue',
+		increaseArea: '20%'
+	});
+	
+	//表单验证
+	$("#form-add").validate({
+		rules:{
+			title:{
+				required:true,
+			},
+			type:{
+				required:true,
+			},
+			thumb:{
+				required:true,
+			}
+			
+
+		},
+		onkeyup:false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler:function(form){
+			apicms_save(form);
+			//$(form).ajaxSubmit();
+			//var index = parent.layer.getFrameIndex(window.name);
+			//parent.$('.btn-refresh').click();
+			//parent.layer.close(index);
+		}
+	});
+	
+
+	
+	
+});
+</script>
+<!--/请在上方写此页面业务相关的脚本-->
+</body>
+</html>

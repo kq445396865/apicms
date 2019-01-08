@@ -39,6 +39,19 @@
 					</div>
 				</div>
 				<div class="row cl">
+					<label class="form-label col-xs-4 col-sm-3">是否前端显示：</label>
+					<div class="formControls col-xs-8 col-sm-9">
+						<span class="select-box">
+						<select name="is_show" class="select">
+							<option value="0"{if condition="$cates['is_show'] eq 0"}selected="selected"{/if}>隐藏</option>
+							<option value="1" {if condition="$cates['is_show'] eq 1"}selected="selected"{/if}>显示</option>
+						</select>
+						</span>
+					</div>
+					<div class="col-3">
+					</div>
+				</div>
+				<div class="row cl">
 					<label class="form-label col-xs-4 col-sm-3">栏目类型：</label>
 					<div class="formControls col-xs-8 col-sm-9">
 						<span class="select-box">

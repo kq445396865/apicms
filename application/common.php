@@ -20,8 +20,6 @@
      exit(json_encode($result)); 
   }
 
-
-
   function pagination($obj){
   		if(!$obj){
         
@@ -44,12 +42,19 @@
   }
 
   function isYesNo($str){
+
   		return $str ? '是' : '否';
   }
+  
   function isredg($str){
+
   	return $str ? 'success' : 'error';
   }
 
+  function getTypeForBanner($str){
+
+      return $str ? '小程序' : '大图';
+  }
 
   function getCatByNewsCount($id){
         

@@ -87,6 +87,8 @@ class News extends Base{
 
 			}
 
+			$data['thumb'] = str_replace('\\', '/', $data['thumb']);
+
 			try {
 
 			$id = model('News')->add($data);
@@ -138,6 +140,8 @@ class News extends Base{
 
 				return $this->result('',0,$validate->getError());
 			}
+
+			$data['thumb'] = str_replace('\\', '/', $data['thumb']);
 
 			try {
 

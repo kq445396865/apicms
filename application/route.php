@@ -13,8 +13,8 @@ use think\Route;
 
 //get
 Route::get('test','api/test/index');
-
-
 Route::resource('test','api/test');
 
-Route::get('api/category','api/category/read');
+Route::post('api/:ver/index','api/:ver.index/index');
+Route::get('api/:ver/category','api/:ver.category/index');
+Route::get('api/:ver/news','api/:ver.news/index');
